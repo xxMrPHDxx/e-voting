@@ -6,6 +6,10 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+body, .app {
+  height: 100vh;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -13,4 +17,16 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+td { vertical-align: middle; }
+
+.toast.fixed-center {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+*[readonly] {
+  background: lightgray;
 }
