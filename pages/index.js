@@ -42,17 +42,18 @@ export default class Home extends React.Component {
   }
 
   render(){
-    if(this.state.loading)
+    if(this.state.loading || !this.state.user)
       return (
         <div>Loading, please wait ...</div>
       )
-    const ContentPanel = this.state.user?.is_admin?AdminPanel:VoterPanel;
+    const ContentPanel = this.state.user.is_admin ? AdminPanel : VoterPanel;
     return (
       <div className="app d-flex flex-column">
         <Header title={this.state.title} description="Admin panel" />
         <ContentPanel
           title={this.state.panel} 
           onTitleChange={ (title)=>this.setState({title}) }
+          router={this.props.router}
           {...this.state.user}
         />
       </div>

@@ -15,6 +15,7 @@ export default Session(async function handler(req, res) {
     if(bcrypt.compareSync(req.body.password, user.password)){
       success = true;
       req.session.userID = user.id;
+      req.session.commit();
       data = { id: user.id, username: user.username, public_key: user.public_key };
     }else{
       message = 'Invalid password!';

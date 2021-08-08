@@ -1,4 +1,5 @@
 import React from "react";
+import Api from "../Api";
 import Dashboard from './admins/Dashboard';
 import Users from './admins/Users';
 import Navbar from "./Navbar";
@@ -27,7 +28,13 @@ export default class AdminPanel extends React.Component {
   }
 
   async Logout(){
-    console.log('Logging out...')
+    try{
+      const { success, message } = await Api.POST('/logout');
+      if(!success) throw message;
+      return this.props.router.push('/login');
+    }catch(error){
+      this.setState({ error });
+    }
   }
 
   render(){
