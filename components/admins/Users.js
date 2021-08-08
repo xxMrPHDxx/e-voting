@@ -13,23 +13,25 @@ export default class Users extends React.Component {
       loading: true,
       buttonDisabled: false,
       page: 0,
+      pages: [],
       users: [],
       error: '',
     }
   }
 
-  async getUsers(){
-    const { success, message, data } = await Api.GET(`/users?page=${this.state.page}`);
+  async getUsers(page){
+    const { success, message, data } = await Api.GET(`/users?page=${page}`);
     if(!success) throw message;
-    return data;
+    const { users, totalPage } = data;
+    this.setState({ 
+      pages: totalPage > 1 ? Array(totalPage).fill().map((_, idx)=>idx) : [0]
+    });
+    return users;
   }
 
   async componentDidMount(){
     try{
-      const users = await this.getUsers();
-      this.setState({
-        users,
-      });
+      this.setState({ users: await this.getUsers(this.state.page) });
     }catch(error){
       this.setState({ error });
     }
@@ -41,7 +43,7 @@ export default class Users extends React.Component {
     try{
       const { success, message } = await Api.PUT('/user', formdata);
       if(!success) throw message;
-      this.setState({ buttonDisabled: false, users: await this.getUsers() });
+      this.setState({ buttonDisabled: false, users: await this.getUsers(this.state.page) });
     }catch(error){
       this.setState({ buttonDisabled: true, error });
     }
@@ -52,7 +54,7 @@ export default class Users extends React.Component {
     try{
       const { success, message } = await Api.POST('/user', formdata);
       if(!success) throw message;
-      this.setState({ buttonDisabled: false, users: await this.getUsers() });
+      this.setState({ buttonDisabled: false, users: await this.getUsers(this.state.page) });
     }catch(error){
       this.setState({ buttonDisabled: true, error });
     }
@@ -63,11 +65,23 @@ export default class Users extends React.Component {
     try{
       const { success, message } = await Api.DELETE('/user', { id });
       if(!success) throw message;
-      this.setState({ buttonDisabled: false, users: await this.getUsers() });
+      this.setState({ buttonDisabled: false, users: await this.getUsers(this.state.page) });
     }catch(error){
       this.setState({ buttonDisabled: true, error });
     }
   }
+
+  async ChangePage(page){
+    page = Math.max(Math.min(page, this.state.pages.length-1), 0);
+    try{
+      this.setState({ page, users: await this.getUsers(page) });
+    }catch(error){
+      this.setState({ error });
+    }
+  }
+
+  PrevPage(){ this.ChangePage(this.state.page-1); }
+  NextPage(){ this.ChangePage(this.state.page+1); }
 
   render(){
     if(this.state.loading === true)
@@ -122,16 +136,52 @@ export default class Users extends React.Component {
             </tr>
           )}
         </UserList>
+        {
+          (this.state.pages.length > 1) && <nav
+            aria-label="User pagination"
+            className="d-flex justify-content-center"
+            >
+            <ul className="pagination pagination-sm">
+              <li 
+                className={`page-item ${this.state.page === 0 ? 'disabled' : ''}`} 
+              >
+                <a 
+                  className="page-link" aria-label="Previous"
+                  onClick={ ()=>this.PrevPage() }
+                >
+                  <span aria-hidden="true">&laquo;</span>
+                  <span className="sr-only">Previous</span>
+                </a>
+              </li>
+              {this.state.pages.map(page=>(
+                <li 
+                  key={page} 
+                  className={`page-item ${page === this.state.page ? 'active' : ''}`}
+                >
+                  <a
+                    className="page-link"
+                    onClick={ ()=>this.ChangePage(page) }
+                  >
+                    {page + 1}
+                  </a>
+                </li>
+              ))}
+              <li
+                className={`page-item ${this.state.page === this.state.pages.length-1 ? 'disabled' : ''}`} 
+              >
+                <a 
+                  className="page-link" aria-label="Next"
+                  onClick={ ()=>this.NextPage() }
+                >
+                  <span aria-hidden="true">&raquo;</span>
+                  <span className="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        }
       </div>
     )
   }
 
 }
-
-/**
-  <button
-    className="btn btn-secondary mr-2"
-  >
-    Edit
-  </button>
- */
