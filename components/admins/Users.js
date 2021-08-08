@@ -21,9 +21,13 @@ export default class Users extends React.Component {
 
   async getUsers(page){
     const { success, message, data } = await Api.GET(`/users?page=${page}`);
-    if(!success) throw message;
+    if(!success){
+      if(page <= 0) throw message;
+      return await this.getUsers(page-1);
+    }
     const { users, totalPage } = data;
     this.setState({ 
+      page: Math.min(this.state.page, totalPage-1),
       pages: totalPage > 1 ? Array(totalPage).fill().map((_, idx)=>idx) : [0]
     });
     return users;
@@ -103,7 +107,7 @@ export default class Users extends React.Component {
           />
         </div>
         <UserList>
-          {this.state.users.map((user, idx)=>
+          {this.state.users?.map((user, idx)=>
             <tr key={idx}>
               <td scope="row">{idx+1}</td>
               <td>{user.name}</td>
