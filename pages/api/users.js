@@ -17,6 +17,6 @@ export default async function(req, res){
   if(users.length > 0){
     message = `Found ${users.length} users!`;
     data = users;
-  }else message = 'No users found!';
+  }else message = 'No user found!';
   res.status(200).json({ success: true, message, data });
 }

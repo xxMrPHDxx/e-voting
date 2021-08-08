@@ -1,8 +1,10 @@
 import React from "react";
 import Api from "../Api";
+import Navbar from "./Navbar";
+
 import Dashboard from './admins/Dashboard';
 import Users from './admins/Users';
-import Navbar from "./Navbar";
+import Elections from './admins/Elections';
 
 export default class AdminPanel extends React.Component {
 
@@ -11,9 +13,10 @@ export default class AdminPanel extends React.Component {
     this.pages = {
       Dashboard,
       Users,
+      Elections,
     };
     this.state = {
-      page: this.pages.Users,
+      page: this.pages.Elections,
     };
   }
 

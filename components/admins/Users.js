@@ -71,7 +71,7 @@ export default class Users extends React.Component {
 
   render(){
     if(this.state.loading === true)
-      return (<div>Loading, please wait... {this.state.loading}</div>)
+      return (<div>Loading, please wait...</div>)
     return (
       <div>
         {
