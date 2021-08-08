@@ -42,6 +42,7 @@ export default class AdminPanel extends React.Component {
     return (
       <div className="flex-grow-1 d-flex flex-column">
         <Navbar title="E-Voting" onLogout={ ()=>this.Logout() }>
+          <li><h6 className="dropdown-header">Management</h6></li>
           {Object.entries(this.pages).map(([page, component])=>{
             return (
               <li key={page}>

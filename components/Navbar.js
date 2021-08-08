@@ -18,9 +18,8 @@ export default class Navbar extends React.Component {
             className="dropdown-menu dropdown-menu-end"
             aria-labelledby="dropdownMenuButton"
           >
-            <li><h6 className="dropdown-header">Management</h6></li>
             {this.props.children}
-            <li><hr className="dropdown-divider"/></li>
+            {this.props.children?.length > 0 && <li><hr className="dropdown-divider"/></li>}
             <li>
               <a
                 className="dropdown-item"
