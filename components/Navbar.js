@@ -4,9 +4,9 @@ export default class Navbar extends React.Component {
 
   render(){
     return (
-      <div className="navbar navbar-dark bg-dark text-light p-3">
+      <div id={this.props.id} className={this.props.className}>
         <a href="/" className="navbar-brand">{this.props.title || 'Blockchain'}</a>
-        <div className="dropdown d-md-none">
+        <div id="navbar-menu" className="dropdown">
           <a 
             className="btn text-light" 
             id="dropdownMenuButton" 

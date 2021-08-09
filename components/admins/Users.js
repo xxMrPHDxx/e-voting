@@ -91,7 +91,7 @@ export default class Users extends React.Component {
     if(this.state.loading === true)
       return (<div>Loading, please wait...</div>)
     return (
-      <div>
+      <div id={this.props.id} className={this.props.className}>
         {
           this.state.error && <Toast 
             title="Error" 

@@ -65,7 +65,7 @@ export default class Elections extends React.Component {
     if(this.state.loading)
       return (<div>Loading, please wait...</div>)
     return (
-      <div>
+      <div id={this.props.id} className={this.props.className}>
         {
           this.state.error && <Toast 
             title="Error" 

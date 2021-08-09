@@ -48,15 +48,15 @@ export default class Home extends React.Component {
       )
     const ContentPanel = this.state.user.is_admin ? AdminPanel : VoterPanel;
     return (
-      <div className="app d-flex flex-column">
-        <Header title={this.state.title} description="Admin panel" />
+      <body>
+        <Header title={this.state.title} description="Admin panel"/>
         <ContentPanel
           title={this.state.panel} 
           onTitleChange={ (title)=>this.setState({title}) }
           router={this.props.router}
           {...this.state.user}
         />
-      </div>
+      </body>
     )
   }
   

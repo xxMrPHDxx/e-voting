@@ -43,8 +43,13 @@ export default class AdminPanel extends React.Component {
   render(){
     const PageComponent = this.state.page;
     return (
-      <div className="flex-grow-1 d-flex flex-column">
-        <Navbar title="E-Voting" onLogout={ ()=>this.Logout() }>
+      <div id="app">
+        <Navbar 
+          id="navbar"
+          className="navbar navbar-dark bg-dark text-light"
+          title="E-Voting" 
+          onLogout={ ()=>this.Logout() }
+        >
           <li><h6 className="dropdown-header">Management</h6></li>
           {Object.entries(this.pages).map(([page, component])=>{
             return (
@@ -59,29 +64,26 @@ export default class AdminPanel extends React.Component {
             )
           })}
         </Navbar>
-        <div className="container-fluid flex-grow-1 d-flex">
-          <div className="row flex-grow-1">
-            <nav className="col-4 col-lg-3 d-none d-md-block nav nav-pills flex-column p-1">
-              {Object.entries(this.pages).map(([page, component])=>{
-                return (
-                  <a 
-                    key={page}
-                    className={this.state.page === component ? 'nav-link active' : 'nav-link'}
-                    onClick={ (e)=>this.navigate(page, component) }
-                  >
-                    {page}
-                  </a>
-                )
-              })}
-            </nav>
-            <div className="col flex-grow-1">
-              {/* {this.pages[this.state.page].render()} */}
-              <PageComponent {...this.props}></PageComponent>
-            </div>
-          </div>
-        </div>
+        <nav id="sidebar" className="pl-2 pr-2">
+          {Object.entries(this.pages).map(([page, component])=>{
+            return (
+              <a 
+                key={page}
+                className={this.state.page === component ? 'nav-link active' : 'nav-link'}
+                onClick={ (e)=>this.navigate(page, component) }
+              >
+                {page}
+              </a>
+            )
+          })}
+        </nav>
+        <PageComponent id="content" className="p-2" {...this.props}/>
       </div>
     )
   }
 
 }
+
+/**
+
+ */
