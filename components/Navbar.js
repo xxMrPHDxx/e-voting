@@ -1,11 +1,12 @@
 import React from "react";
+import Link from 'next/link';
 
 export default class Navbar extends React.Component {
 
   render(){
     return (
       <div id={this.props.id} className={this.props.className}>
-        <a href="/" className="navbar-brand">{this.props.title || 'Blockchain'}</a>
+        <Link href="/" className="navbar-brand">{this.props.title || 'Blockchain'}</Link>
         <div id="navbar-menu" className="dropdown">
           <a 
             className="btn text-light" 

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import KeyPair from '../../KeyPair';
 import Database from '../../Database';
 
-export default async function(req, res){
+export default async function handler(req, res){
   let success = false, message = 'Something went wrong!', data = null;
   if(req.method === 'PUT'){
     const { username, name, password, is_admin } = req.body;

@@ -2,7 +2,7 @@ import Database from '../../Database';
 
 const ELECTIONS_PER_PAGE = 10;
 
-export default async function(req, res){
+export default async function handler(req, res){
   if(req.method !== 'GET') return res.status(405).json({ success: false, message: 'Not allowed!' });
   let message = 'Something went wrong!', data = [];
   const from = (req.query.page || 0) * ELECTIONS_PER_PAGE;
